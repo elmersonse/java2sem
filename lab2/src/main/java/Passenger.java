@@ -1,4 +1,5 @@
 import java.sql.Time;
+import java.util.Locale;
 
 public class Passenger {
     private int flightId;
@@ -53,6 +54,6 @@ public class Passenger {
     }
 
     public String toString() {
-        return String.format("%d, %s, %s, %f", flightId, surname, destination, flightTime);
+        return String.format(Locale.US, "%d,%s,%s,%f", flightId, surname, destination, flightTime);
     }
 }
