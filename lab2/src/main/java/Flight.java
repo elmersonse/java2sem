@@ -23,6 +23,11 @@ public class Flight {
         this.ticketPrice = ticketPrice;
     }
 
+    public Flight(String[] args) {
+        this.name = args[0];
+
+    }
+
     public String getName() {
         return name;
     }
