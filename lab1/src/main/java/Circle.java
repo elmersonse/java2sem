@@ -46,12 +46,4 @@ public class Circle {
     public double getLength() {
         return 2*Math.PI*r;
     }
-
-    public void add(Circle c) { this.r += c.getR(); }
-
-    public void sub(Circle c) { this.r -= c.getR(); }
-
-    public void mul(Circle c) { this.r *= c.getR(); }
-
-    public void div(Circle c) { this.r /= c.getR(); }
 }

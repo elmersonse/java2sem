@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -7,9 +8,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RunnerTest {
-    List<Circle> c = new ArrayList<Circle>();
+    static List<Circle> c = new ArrayList<>();
 
-    RunnerTest() {
+    @BeforeAll
+    static void setupTest() {
         c.add(new Circle(0, 0, 2));
         c.add(new Circle(3, 1, 4));
         c.add(new Circle(1.5, 0.5, 1));
@@ -46,37 +48,5 @@ class RunnerTest {
     @DisplayName("Length test")
     void getLength() {
         assertEquals(Math.PI * 2, c.get(2).getLength());
-    }
-
-    @Test
-    @DisplayName("Add test")
-    void add() {
-        Circle c0 = new Circle(0, 0, 0);
-        c0.add(c.get(0));
-        assertEquals(2, c0.getR());
-    }
-
-    @Test
-    @DisplayName("Multiple test")
-    void mul() {
-        Circle c0 = new Circle(0, 0, 2);
-        c0.mul(c.get(0));
-        assertEquals(4, c0.getR());
-    }
-
-    @Test
-    @DisplayName("Sub test")
-    void sub() {
-        Circle c0 = new Circle(0, 0, 10);
-        c0.sub(c.get(0));
-        assertEquals(8, c0.getR());
-    }
-
-    @Test
-    @DisplayName("Division test")
-    void div() {
-        Circle c0 = new Circle(0, 0, 6);
-        c0.div(c.get(0));
-        assertEquals(3, c0.getR());
     }
 }
