@@ -40,8 +40,8 @@ public class Flight {
         return seatCount;
     }
 
-    public String getFlightDate() {
-        return flightDate.toString();
+    public Date getFlightDate() {
+        return flightDate;
     }
 
     public int getSoldTicketCount() {
@@ -70,6 +70,13 @@ public class Flight {
 
     public void setTicketPrice(double ticketPrice) {
         this.ticketPrice = ticketPrice;
+    }
+
+    public static int compare1(Flight f1, Flight f2) {
+        if(f1.getSeatCount() < f2.getSeatCount()) {
+            return -1;
+        }
+        return 1;
     }
 
     @Override

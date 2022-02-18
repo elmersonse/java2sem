@@ -2,31 +2,38 @@ import java.sql.Time;
 import java.util.Locale;
 
 public class Passenger {
-    private int flightId;
+    private String flightName;
     private String surname;
     private String destination;
     private double flightTime;
 
     public Passenger() {
-        flightId = 0;
+        flightName = "";
         surname = "";
         destination = "";
         flightTime = 0;
     }
 
-    public Passenger(int flightId, String surname, String destination, double flightTime) {
-        this.flightId = flightId;
+    public Passenger(String flightName, String surname, String destination, double flightTime) {
+        this.flightName = flightName;
         this.surname = surname;
         this.destination = destination;
         this.flightTime = flightTime;
     }
 
-    public int getFlightId() {
-        return flightId;
+    public Passenger(String[] args) {
+        flightName = args[0];
+        surname = args[1];
+        destination = args[2];
+        flightTime = Double.parseDouble(args[3]);
     }
 
-    public void setFlightId(int flightId) {
-        this.flightId = flightId;
+    public String getflightName() {
+        return flightName;
+    }
+
+    public void setflightName(String flightName) {
+        this.flightName = flightName;
     }
 
     public String getSurname() {
@@ -54,6 +61,17 @@ public class Passenger {
     }
 
     public String toString() {
-        return String.format(Locale.US, "%d,%s,%s,%f", flightId, surname, destination, flightTime);
+        return String.format(Locale.US, "%s,%s,%s,%f", flightName, surname, destination, flightTime);
+    }
+
+    public static int comparator(Passenger p1, Passenger p2) {
+        return p1.surname.compareTo(p2.surname);
+    }
+
+    public static int comparator1(Passenger p1, Passenger p2) {
+        if(p1.flightTime > p2.flightTime) {
+            return 1;
+        }
+        return -1;
     }
 }
