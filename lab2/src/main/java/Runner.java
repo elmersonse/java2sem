@@ -4,6 +4,7 @@ import java.io.IOError;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.*;
+import java.util.function.DoubleSupplier;
 import java.util.stream.Collectors;
 
 public class Runner {
@@ -66,20 +67,12 @@ public class Runner {
         System.out.println(passengers.stream().collect(Collectors.groupingBy(Passenger::getDestination)).keySet());
     }
 
-
-    //Определение среднего количество проданных билетов для каждой даты вылета. Выводить дату вылета и среднее
-//    количество проданных билетов.
     public static void task3() {
         System.out.println("\nОпределение среднего количество проданных билетов для каждой даты вылета. Выводить дату вылета и среднее"+
                 " количество проданных билетов.");
-        Map<Date, List<Flight>> dmap = flights.stream().collect(Collectors.groupingBy(Flight::getFlightDate));
-        for(Map.Entry<Date, List<Flight>> e : dmap.entrySet()) {
-            double count = 0;
-            for (Flight f : e.getValue()) {
-                count += f.getSoldTicketCount();
-            }
-            count /= e.getValue().size();
-            System.out.println(e.getKey() + ": " + count);
+        Map<Date, DoubleSummaryStatistics> dmap = flights.stream().collect(Collectors.groupingBy(Flight::getFlightDate, Collectors.summarizingDouble(Flight::getSoldTicketCount)));
+        for(Map.Entry<Date, DoubleSummaryStatistics> e: dmap.entrySet()) {
+            System.out.println(e.getKey()+": "+e.getValue().getSum()/e.getValue().getCount());
         }
     }
 
@@ -117,29 +110,7 @@ public class Runner {
 
     public static void task7() {
         System.out.println("\nВывод списка фамилий пассажиров, которые суммарно налетали более 20 часов.");
-        Map<String, List<Passenger>> pmap = passengers.stream().collect(Collectors.groupingBy(Passenger::getSurname));
-        for(Map.Entry<String, List<Passenger>> e: pmap.entrySet()) {
-            double count = 0;
-            for(Passenger p: e.getValue()) {
-                count+=p.getFlightTime();
-            }
-            if(count > 20) {
-                System.out.println(e.getKey() + ": " + count);
-            }
-        }
-
-
-
-
-
-//        Map<Date, List<Flight>> dmap = flights.stream().collect(Collectors.groupingBy(Flight::getFlightDate));
-//        for(Map.Entry<Date, List<Flight>> e : dmap.entrySet()) {
-//            double count = 0;
-//            for (Flight f : e.getValue()) {
-//                count += f.getSoldTicketCount();
-//            }
-//            count /= e.getValue().size();
-//            System.out.println(e.getKey() + ": " + count);
-//        }
+        Map<String, DoubleSummaryStatistics> pmap = passengers.stream().collect(Collectors.groupingBy(Passenger::getSurname, Collectors.summarizingDouble(Passenger::getFlightTime)));
+        pmap.keySet().stream().filter(p -> pmap.get(p).getSum() > 20).forEach(f -> System.out.println(f + ": " + pmap.get(f).getSum()));
     }
 }
